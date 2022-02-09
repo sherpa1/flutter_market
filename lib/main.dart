@@ -40,13 +40,13 @@ class MarketApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProductScreen(title: 'Flutter Market', products: products),
+      home: ProductsScreen(title: 'Flutter Market', products: products),
     );
   }
 }
 
-class ProductScreen extends StatefulWidget {
-  const ProductScreen({Key? key, required this.title, required this.products})
+class ProductsScreen extends StatefulWidget {
+  const ProductsScreen({Key? key, required this.title, required this.products})
       : super(key: key);
 
   final String title;
@@ -54,10 +54,10 @@ class ProductScreen extends StatefulWidget {
   final List<Product> products;
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _ProductsScreenState extends State<ProductsScreen> {
   late List<Product> products;
 
   @override
