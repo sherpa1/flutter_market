@@ -192,11 +192,22 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(product!.id.toString()),
-        Text(product!.name),
-      ],
+    return SizedBox(
+      width: 300,
+      height: 100,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(product!.id.toString()),
+              Text(product!.name),
+              Text(faker.lorem.sentence())
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
