@@ -132,13 +132,21 @@ class _ProductsMasterState extends State<ProductsMaster> {
   void onProductSelected(Product product) {
     setState(() {
       selectedProduct = product;
+      //when selectedProduct has a value, ProductDetails widget is displayed
+    });
+  }
+
+  void hideDetails() {
+    setState(() {
+      selectedProduct = null;
+      //when selectedProduct is null ProductDetails widget is hidden
     });
   }
 
   //affichage conditionnel
   Widget _showDetailsWhenProductIsSelected() {
     return (selectedProduct != null)
-        ? ProductDetails(product: selectedProduct)
+        ? ProductDetails(product: selectedProduct, onHide: hideDetails)
         : Container();
   }
 
@@ -186,24 +194,31 @@ class ProductPreview extends StatelessWidget {
 }
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({Key? key, required this.product}) : super(key: key);
+  const ProductDetails({Key? key, required this.product, required this.onHide})
+      : super(key: key);
 
   final Product? product;
+  final Function onHide;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: 100,
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(product!.id.toString()),
+              Text(
+                product!.id.toString(),
+              ),
               Text(product!.name),
-              Text(faker.lorem.sentence())
+              Text(
+                faker.lorem.sentence(),
+              ),
+              IconButton(
+                  onPressed: () => onHide(), icon: const Icon(Icons.close))
             ],
           ),
         ),
