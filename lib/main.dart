@@ -127,7 +127,7 @@ class ProductsMaster extends StatefulWidget {
 }
 
 class _ProductsMasterState extends State<ProductsMaster> {
-  Product? selectedProduct;
+  Product? selectedProduct; //product will be null initially
 
   void onProductSelected(Product product) {
     setState(() {
@@ -135,6 +135,7 @@ class _ProductsMasterState extends State<ProductsMaster> {
     });
   }
 
+  //affichage conditionnel
   Widget _showDetailsWhenProductIsSelected() {
     return (selectedProduct != null)
         ? ProductDetails(product: selectedProduct)
