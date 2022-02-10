@@ -117,26 +117,47 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-//liste de tous les produits
-class ProductsMaster extends StatelessWidget {
+class ProductsMaster extends StatefulWidget {
   const ProductsMaster({Key? key, required this.products}) : super(key: key);
 
   final List<Product> products;
 
+  @override
+  State<ProductsMaster> createState() => _ProductsMasterState();
+}
+
+class _ProductsMasterState extends State<ProductsMaster> {
+  Product? selectedProduct;
+
   void onProductSelected(Product product) {
-    print(product.name);
+    setState(() {
+      selectedProduct = product;
+    });
+  }
+
+  Widget _showDetailsWhenProductIsSelected() {
+    return (selectedProduct != null)
+        ? ProductDetails(product: selectedProduct)
+        : Container();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return ProductPreview(
-          product: products[index],
-          onSelect: onProductSelected,
-        );
-      },
+    return Column(
+      children: [
+        _showDetailsWhenProductIsSelected(),
+        Expanded(
+          child: ListView.builder(
+            itemCount: widget.products.length,
+            itemBuilder: (context, index) {
+              return ProductPreview(
+                product: widget.products[index],
+                onSelect: onProductSelected,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -166,10 +187,15 @@ class ProductPreview extends StatelessWidget {
 class ProductDetails extends StatelessWidget {
   const ProductDetails({Key? key, required this.product}) : super(key: key);
 
-  final Product product;
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [
+        Text(product!.id.toString()),
+        Text(product!.name),
+      ],
+    );
   }
 }
