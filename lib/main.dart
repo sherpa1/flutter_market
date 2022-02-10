@@ -150,6 +150,10 @@ class _ProductsMasterState extends State<ProductsMaster> {
         : Container();
   }
 
+  bool _isSelected(int index) {
+    return selectedProduct == widget.products[index];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -162,6 +166,7 @@ class _ProductsMasterState extends State<ProductsMaster> {
               return ProductPreview(
                 product: widget.products[index],
                 onSelect: onProductSelected,
+                selected: _isSelected(index),
               );
             },
           ),
@@ -174,10 +179,14 @@ class _ProductsMasterState extends State<ProductsMaster> {
 //aperçu de 1 produit
 class ProductPreview extends StatelessWidget {
   const ProductPreview(
-      {Key? key, required this.product, required this.onSelect})
+      {Key? key,
+      required this.product,
+      required this.onSelect,
+      required this.selected})
       : super(key: key);
 
   final Product product;
+  final bool selected;
   final Function onSelect;
 
   void onTap() {
@@ -187,7 +196,10 @@ class ProductPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: selected ? Colors.green : Colors.white,
       title: Text(product.name),
+      subtitle: selected ? Text(faker.lorem.sentence()) : null,
+      trailing: selected ? const Icon(Icons.check) : null,
       onTap: () => onTap(),
     );
   }
