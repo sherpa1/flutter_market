@@ -11,9 +11,11 @@ void main() {
     ),
   );
 
-  runApp(MarketApp(
-    products: products,
-  ));
+  runApp(
+    MarketApp(
+      products: products,
+    ),
+  );
 }
 
 //utilisation de la bibliothèque Faker pour obtenir des données fictives
@@ -121,12 +123,19 @@ class ProductsMaster extends StatelessWidget {
 
   final List<Product> products;
 
+  void onProductSelected(Product product) {
+    print(product.name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: products.length,
       itemBuilder: (context, index) {
-        return ProductPreview(product: products[index]);
+        return ProductPreview(
+          product: products[index],
+          onSelect: onProductSelected,
+        );
       },
     );
   }
@@ -134,14 +143,22 @@ class ProductsMaster extends StatelessWidget {
 
 //aperçu de 1 produit
 class ProductPreview extends StatelessWidget {
-  const ProductPreview({Key? key, required this.product}) : super(key: key);
+  const ProductPreview(
+      {Key? key, required this.product, required this.onSelect})
+      : super(key: key);
 
   final Product product;
+  final Function onSelect;
+
+  void onTap() {
+    onSelect(product);
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(product.name),
+      onTap: () => onTap(),
     );
   }
 }
