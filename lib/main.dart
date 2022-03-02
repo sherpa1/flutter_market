@@ -1,9 +1,10 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
+final faker = Faker();
+
 void main() {
-//source de données statiques générées aléatoirement
-  var products = List<Product>.generate(
+  final products = List<Product>.generate(
     30,
     (index) => Product(
       index + 1,
@@ -18,14 +19,10 @@ void main() {
   );
 }
 
-//utilisation de la bibliothèque Faker pour obtenir des données fictives
-var faker = Faker();
-
 class Product {
   int id;
   String name;
   double price = 0.0;
-  //String category; //fruits / vegetables
 
   Product(this.id, this.name);
 }
@@ -38,7 +35,7 @@ class MarketApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Market',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -65,16 +62,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void initState() {
     super.initState();
-    //products = widget.products;
-
-    //source de données statiques générées aléatoirement
-    products = List<Product>.generate(
-      30,
-      (index) => Product(
-        index + 1,
-        faker.food.dish(),
-      ),
-    );
+    products = widget.products;
   }
 
   void _addProduct() {
@@ -89,16 +77,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: ProductsMaster(
-          products: products,
-        ),
+      body: ProductsMaster(
+        products: products,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addProduct(),
-        tooltip: 'Increment',
+        tooltip: 'Add a product',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
@@ -176,7 +162,6 @@ class _ProductsMasterState extends State<ProductsMaster> {
   }
 }
 
-//aperçu de 1 produit
 class ProductPreview extends StatelessWidget {
   const ProductPreview(
       {Key? key,
